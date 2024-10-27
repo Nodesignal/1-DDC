@@ -89,9 +89,9 @@ void sendStatsPage(WiFiClient client) {
 	client.print(user_settings.attack_threshold);
 	client.print("' min='2000' max='35000'><input type='submit'></form></td></tr>");
 
-	client.print("<tr><td>Lives Per Level (3-9)</td><td><form><input type='number' name='L' value='");
-	client.print(user_settings.lives_per_level);
-	client.print("' min='3' max='9'><input type='submit'></form></td></tr>");
+	client.print("<tr><td>Lives Per Game</td><td>");
+	client.print(user_settings.lives);
+	client.println("</td></tr>");
 
 	client.print("</table>");
 

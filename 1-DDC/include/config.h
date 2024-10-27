@@ -44,4 +44,6 @@
 // This endpoint provides the Twang32 stats for ingestion via Prometheus.
 #define ENABLE_PROMETHEUS_METRICS_ENDPOINT
 
+#define LIVES_PER_GAME 3
+
 #endif
