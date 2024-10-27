@@ -1,6 +1,8 @@
 #include <WiFi.h>
 #include "settings.h"
 
+extern int lives;
+
 const char* ssid     = "TWANG_AP";
 const char* passphrase = "12345678";
 
