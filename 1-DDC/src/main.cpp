@@ -98,6 +98,7 @@ bool attacking = 0;                // Is the attack in progress?
 
 Twang_MPU accelgyro = Twang_MPU();
 CRGB leds[VIRTUAL_LED_COUNT];
+#define LIFE_LEDS 3
 RunningMedian MPUAngleSamples = RunningMedian(5);
 RunningMedian MPUWobbleSamples = RunningMedian(5);
 iSin isin = iSin();
@@ -106,7 +107,7 @@ iSin isin = iSin();
 
 // POOLS
 #define LIFE_LEDS 3
-int lifeLEDs[LIFE_LEDS] = {7, 6, 5}; // these numbers are Arduino GPIO numbers...this is not used in the B. Dring enclosure design
+CRGB lifeLEDs[LIFE_LEDS]; // Array to store the LED states for life indicators
 
 #define ENEMY_COUNT 10
 Enemy enemyPool[ENEMY_COUNT] = {
@@ -351,18 +352,16 @@ void drawLEDs(int start, int end, CRGB color, int delayTime = 0) {
 }
 
 void drawLives() {
-    // show how many lives are left by drawing a short line of green leds for each life
-    SFXcomplete();  // stop any sounds
-    FastLED.clear();
-
-    int pos = 0;
-    for (int i = 0; i < lives; i++) {
-        drawLEDs(pos, pos + 4, CRGB(0, 255, 0), 20);
-        pos += 5;
+    // Show how many lives are left by lighting up the life LEDs
+    for (int i = 0; i < LIFE_LEDS; i++) {
+        if (i < lives) {
+            lifeLEDs[i] = CRGB(0, 255, 0); // Green for remaining lives
+        } else {
+            lifeLEDs[i] = CRGB(0, 0, 0); // Turn off LEDs for lost lives
+        }
     }
     FastLED.show();
-    delay(400);
-    FastLED.clear();
+
 }
 
 void updateLives(){  
@@ -1320,6 +1319,7 @@ void setup() {
 	
   Serial.print("Compiled for WS2812B");
   FastLED.addLeds<WS2812B, DATA_PIN, LED_COLOR_ORDER>(leds, MAX_LEDS);
+  FastLED.addLeds<WS2812B, LIFE_LED_PIN, GRB>(lifeLEDs, LIFE_LEDS);
 
 	FastLED.setBrightness(user_settings.led_brightness);
 	FastLED.setDither(1);

@@ -27,6 +27,7 @@
 	#define CONFIG_H
 
 #define DATA_PIN        16
+#define LIFE_LED_PIN    18
 #define CLOCK_PIN       17
 
 /* Game is rendered to this and scaled down to your strip.
