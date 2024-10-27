@@ -77,6 +77,12 @@ long attackMillis = 0;             // Time the attack started
 bool attacking = 0;                // Is the attack in progress?   
 #define BOSS_WIDTH          40
 
+// New constants for LED effects
+#define LED_BRIGHTNESS_MAX  255
+#define LED_BRIGHTNESS_MIN  0
+#define LED_FADE_SPEED      20
+#define LED_SPARKLE_CHANCE  28
+
 // TODO all animation durations should be defined rather than literals 
 // because they are used in main loop and some sounds too.
 #define STARTUP_WIPEUP_DUR 200
@@ -334,26 +340,29 @@ void SFXbosskilled()
 
 
 
-void drawLives()
-{
-  // show how many lives are left by drawing a short line of green leds for each life
-  SFXcomplete();  // stop any sounds
-  FastLED.clear(); 
-  
-  int pos = 0;  
-  for (int i = 0; i < lives; i++)
-  { 
-      for (int j=0; j<4; j++)
-      {
-        leds[pos++] = CRGB(0, 255, 0);
-        FastLED.show();       
-      }
-      leds[pos++] = CRGB(0, 0, 0);      
-      delay(20);
-  }
-  FastLED.show();
-  delay(400);
-  FastLED.clear();
+void drawLEDs(int start, int end, CRGB color, int delayTime = 0) {
+    for (int i = start; i < end; i++) {
+        leds[i] = color;
+        if (delayTime > 0) {
+            FastLED.show();
+            delay(delayTime);
+        }
+    }
+}
+
+void drawLives() {
+    // show how many lives are left by drawing a short line of green leds for each life
+    SFXcomplete();  // stop any sounds
+    FastLED.clear();
+
+    int pos = 0;
+    for (int i = 0; i < lives; i++) {
+        drawLEDs(pos, pos + 4, CRGB(0, 255, 0), 20);
+        pos += 5;
+    }
+    FastLED.show();
+    delay(400);
+    FastLED.clear();
 }
 
 void updateLives(){  
