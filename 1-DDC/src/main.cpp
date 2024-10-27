@@ -151,7 +151,7 @@ int playerPosition;                // Stores the player position
 int playerPositionModifier;        // +/- adjustment to player position
 bool playerAlive;
 long killTime;
-int lives = LIVES_PER_LEVEL; 
+int lives = LIVES_PER_GAME; 
 bool lastLevel = false;
 
 int score = 0;
@@ -506,6 +506,11 @@ void loadLevel(){
 	playerAlive = 1;
 	lastLevel = false; // this gets changed on the boss level
 	
+	// Set lives to LIVES_PER_GAME at the start of the game
+	if (levelNumber == 0) {
+		lives = LIVES_PER_GAME;
+	}
+
 	/// Defaults...OK to change the following items in the levels below
 	attack_width = DEFAULT_ATTACK_WIDTH; 
 	playerPosition = 0; 

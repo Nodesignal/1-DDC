@@ -90,7 +90,7 @@ void sendStatsPage(WiFiClient client) {
 	client.print("' min='2000' max='35000'><input type='submit'></form></td></tr>");
 
 	client.print("<tr><td>Lives Per Game</td><td>");
-	client.print(user_settings.lives);
+	client.print(lives);
 	client.println("</td></tr>");
 
 	client.print("</table>");
