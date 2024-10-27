@@ -11,13 +11,13 @@ class Boss
     int _lives;
     int _ticks;
   private:
-    bool _alive;
+    bool _alive = false;
 };
 
 void Boss::Spawn(){
     _pos = 800;
     _lives = 3;
-    _alive = 1;
+    _alive = true;
 }
 
 void Boss::Hit(){
@@ -38,5 +38,5 @@ bool Boss::Alive(){
 }
 
 void Boss::Kill(){
-    _alive = 0;
+    _alive = false;
 }
