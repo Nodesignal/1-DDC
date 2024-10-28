@@ -51,6 +51,22 @@ void sendHTTPHeader(WiFiClient client, const char* contentType) {
 void sendHTMLPage(WiFiClient client, const String& content) {
 	sendHTTPHeader(client, "text/html");
 	client.println("<html>");
+	client.println("<head>");
+	client.println("<style>");
+	client.println("body { font-family: Arial, sans-serif; margin: 0; padding: 0; }");
+	client.println("h1, h2 { background-color: #4CAF50; color: white; padding: 10px; }");
+	client.println("ul { list-style-type: none; padding: 0; }");
+	client.println("li { padding: 8px; margin-bottom: 7px; background-color: #f9f9f9; border: 1px solid #ddd; }");
+	client.println("table { width: 100%; border-collapse: collapse; }");
+	client.println("td { padding: 8px; border: 1px solid #ddd; }");
+	client.println("button, input[type='submit'] { background-color: #4CAF50; color: white; border: none; padding: 10px 20px; cursor: pointer; }");
+	client.println("button:hover, input[type='submit']:hover { background-color: #45a049; }");
+	client.println("@media (max-width: 600px) { h1, h2 { font-size: 18px; } }");
+	client.println("</style>");
+	client.println("<script>");
+	client.println("function refreshPage() { location.reload(); }");
+	client.println("</script>");
+	client.println("</head>");
 	client.println("<body>");
 	client.print(content);
 	client.println("</body>");
@@ -66,7 +82,7 @@ String generateStatsPage() {
 	}
 	page += "<li>High score: " + String(user_settings.high_score) + "</li>";
 	page += "<li>Boss kills: " + String(user_settings.boss_kills) + "</li>";
-	page += "</ul><button onClick=\"location.href = 'http://192.168.4.1'\">Refresh</button>";
+	page += "</ul><button onClick=\"refreshPage()\">Refresh</button>";
 	page += "<h2>Adjustable Settings </h2><table>";
 	page += "<tr><td>LED Count (60-" + String(MAX_LEDS) + ")</td><td><form><input type='number' name='C' value='" + String(user_settings.led_count) + "' min='60' max='" + String(MAX_LEDS) + "'><input type='submit'></form></td></tr>";
 	page += "<tr><td>Brightness (10-255)</td><td><form><input type='number' name='B' value='" + String(user_settings.led_brightness) + "' min='10' max='255'><input type='submit'></form></td></tr>";
