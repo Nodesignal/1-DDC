@@ -379,15 +379,13 @@ void save_game_stats(bool bossKill)
 	if (score > user_settings.high_score) {
 		user_settings.high_score = score;
 	}
-	extern char playerName[10]; // Use the playerName from the global scope
 	for (int i = 0; i < 5; i++) {
 		if (score > user_settings.leaderboard[i].score) {
 			for (int j = 4; j > i; j--) {
 				user_settings.leaderboard[j] = user_settings.leaderboard[j - 1];
 			}
 			user_settings.leaderboard[i].score = score;
-			strncpy(user_settings.leaderboard[i].name, playerName, sizeof(user_settings.leaderboard[i].name) - 1);
-			user_settings.leaderboard[i].name[sizeof(user_settings.leaderboard[i].name) - 1] = '\0';
+			// The player's name is already stored in the leaderboard
 			break;
 		}
 	}
