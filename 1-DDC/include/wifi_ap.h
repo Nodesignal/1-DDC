@@ -179,7 +179,20 @@ void ap_client_check() {
 						if (finish != -1) {
 							String val = line.substring(start + 1, finish);
 							if (paramCode == 'N') { // 'N' for playerName
-								strncpy(user_settings.leaderboard[0].name, val.c_str(), sizeof(user_settings.leaderboard[0].name) - 1);
+								String decodedName = "";
+								for (int i = 0; i < val.length(); i++) {
+									if (val[i] == '%') {
+										int code;
+										sscanf(val.substring(i + 1, i + 3).c_str(), "%x", &code);
+										decodedName += char(code);
+										i += 2;
+									} else if (val[i] == '+') {
+										decodedName += ' ';
+									} else {
+										decodedName += val[i];
+									}
+								}
+								strncpy(user_settings.leaderboard[0].name, decodedName.c_str(), sizeof(user_settings.leaderboard[0].name) - 1);
 								user_settings.leaderboard[0].name[sizeof(user_settings.leaderboard[0].name) - 1] = '\0';
 							} else {
 								change_setting(paramCode, val.toInt());
