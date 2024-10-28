@@ -1,7 +1,6 @@
 #include <WiFi.h>
 #include "settings.h"
 
-extern char playerName[10]; // Declare playerName as an external variable
 
 extern int lives;
 
@@ -180,8 +179,8 @@ void ap_client_check() {
 						if (finish != -1) {
 							String val = line.substring(start + 1, finish);
 							if (paramCode == 'N') { // 'N' for playerName
-								strncpy(playerName, val.c_str(), sizeof(playerName) - 1);
-								playerName[sizeof(playerName) - 1] = '\0';
+								strncpy(user_settings.leaderboard[0].name, val.c_str(), sizeof(user_settings.leaderboard[0].name) - 1);
+								user_settings.leaderboard[0].name[sizeof(user_settings.leaderboard[0].name) - 1] = '\0';
 							} else {
 								change_setting(paramCode, val.toInt());
 							}

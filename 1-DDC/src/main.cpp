@@ -1340,7 +1340,6 @@ void screenSaverTick(){
 }
 
 
-char playerName[10] = "Player"; // Global variable to store the player's name
 
 void setup() {
 	Serial.begin(115200);
