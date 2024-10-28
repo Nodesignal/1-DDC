@@ -1,6 +1,8 @@
 #include <WiFi.h>
 #include "settings.h"
 
+extern char playerName[10]; // Declare playerName as an external variable
+
 extern int lives;
 
 const char* ssid     = "TWANG_AP";
