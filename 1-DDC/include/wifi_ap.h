@@ -83,6 +83,11 @@ String generateStatsPage() {
 	page += "<li>High score: " + String(user_settings.high_score) + "</li>";
 	page += "<li>Boss kills: " + String(user_settings.boss_kills) + "</li>";
 	page += "</ul><button onClick=\"refreshPage()\">Refresh</button>";
+	page += "<h2>Leaderboard</h2><ul>";
+	for (int i = 0; i < 5; i++) {
+		page += "<li>Rank " + String(i + 1) + ": " + String(user_settings.leaderboard[i]) + " points</li>";
+	}
+	page += "</ul>";
 	page += "<h2>Adjustable Settings </h2><table>";
 	page += "<tr><td>LED Count (60-" + String(MAX_LEDS) + ")</td><td><form><input type='number' name='C' value='" + String(user_settings.led_count) + "' min='60' max='" + String(MAX_LEDS) + "'><input type='submit'></form></td></tr>";
 	page += "<tr><td>Brightness (10-255)</td><td><form><input type='number' name='B' value='" + String(user_settings.led_brightness) + "' min='10' max='255'><input type='submit'></form></td></tr>";

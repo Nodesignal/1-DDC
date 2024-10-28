@@ -376,8 +376,19 @@ void save_game_stats(bool bossKill)
 {	
 	user_settings.games_played += 1;
 	user_settings.total_points += score;
-	if (score > user_settings.high_score)
-		user_settings.high_score += score;
+	if (score > user_settings.high_score) {
+		user_settings.high_score = score;
+	}
+	// Update leaderboard
+	for (int i = 0; i < 5; i++) {
+		if (score > user_settings.leaderboard[i]) {
+			for (int j = 4; j > i; j--) {
+				user_settings.leaderboard[j] = user_settings.leaderboard[j - 1];
+			}
+			user_settings.leaderboard[i] = score;
+			break;
+		}
+	}
 	if (bossKill)
 		user_settings.boss_kills += 1;
 	
