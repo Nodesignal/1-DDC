@@ -381,11 +381,13 @@ void save_game_stats(bool bossKill)
 	}
 	// Update leaderboard
 	for (int i = 0; i < 5; i++) {
-		if (score > user_settings.leaderboard[i]) {
+		if (score > user_settings.leaderboard[i].score) {
 			for (int j = 4; j > i; j--) {
 				user_settings.leaderboard[j] = user_settings.leaderboard[j - 1];
 			}
-			user_settings.leaderboard[i] = score;
+			user_settings.leaderboard[i].score = score;
+			strncpy(user_settings.leaderboard[i].name, playerName, sizeof(user_settings.leaderboard[i].name) - 1);
+			user_settings.leaderboard[i].name[sizeof(user_settings.leaderboard[i].name) - 1] = '\0';
 			break;
 		}
 	}

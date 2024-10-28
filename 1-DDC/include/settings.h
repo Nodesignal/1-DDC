@@ -97,7 +97,10 @@ typedef struct {
 	uint32_t total_points;
 	uint16_t high_score = 0;
 	uint16_t boss_kills = 0;
-	uint16_t leaderboard[5] = {0}; // Top 5 high scores
+	struct {
+		uint16_t score;
+		char name[10];
+	} leaderboard[5] = {{0, ""}}; // Top 5 high scores with player names
 	
 }settings_t;
 
