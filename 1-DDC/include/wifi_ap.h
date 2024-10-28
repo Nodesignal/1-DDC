@@ -194,6 +194,7 @@ void ap_client_check() {
 								}
 								strncpy(user_settings.leaderboard[0].name, decodedName.c_str(), sizeof(user_settings.leaderboard[0].name) - 1);
 								user_settings.leaderboard[0].name[sizeof(user_settings.leaderboard[0].name) - 1] = '\0';
+								score = 0; // Reset score after submitting the name
 							} else {
 								change_setting(paramCode, val.toInt());
 							}
