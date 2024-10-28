@@ -88,7 +88,7 @@ String generateStatsPage() {
 		page += "<li>Rank " + String(i + 1) + ": " + String(user_settings.leaderboard[i].name) + " - " + String(user_settings.leaderboard[i].score) + " points</li>";
 	}
 	page += "</ul>";
-	page += "<h2>Enter Player Name</h2><form><input type='text' name='playerName' maxlength='10'><input type='submit'></form>";
+	page += "<h2>Enter Player Name</h2><form><input type='text' name='playerName' maxlength='10' value='" + String(user_settings.leaderboard[0].name) + "'><input type='submit'></form>";
 	page += "<h2>Adjustable Settings </h2><table>";
 	page += "<tr><td>LED Count (60-" + String(MAX_LEDS) + ")</td><td><form><input type='number' name='C' value='" + String(user_settings.led_count) + "' min='60' max='" + String(MAX_LEDS) + "'><input type='submit'></form></td></tr>";
 	page += "<tr><td>Brightness (10-255)</td><td><form><input type='number' name='B' value='" + String(user_settings.led_brightness) + "' min='10' max='255'><input type='submit'></form></td></tr>";
@@ -177,7 +177,12 @@ void ap_client_check() {
 						int finish = line.indexOf('H', start + 1) - 1;
 						if (finish != -1) {
 							String val = line.substring(start + 1, finish);
-							change_setting(paramCode, val.toInt());
+							if (paramCode == 'N') { // 'N' for playerName
+								strncpy(playerName, val.c_str(), sizeof(playerName) - 1);
+								playerName[sizeof(playerName) - 1] = '\0';
+							} else {
+								change_setting(paramCode, val.toInt());
+							}
 						}
 					}
 					page_to_send = Stats;

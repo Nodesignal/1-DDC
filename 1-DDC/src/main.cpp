@@ -379,7 +379,7 @@ void save_game_stats(bool bossKill)
 	if (score > user_settings.high_score) {
 		user_settings.high_score = score;
 	}
-	char playerName[10] = "Player"; // Default player name, can be set dynamically
+	extern char playerName[10]; // Use the playerName from the global scope
 	for (int i = 0; i < 5; i++) {
 		if (score > user_settings.leaderboard[i].score) {
 			for (int j = 4; j > i; j--) {
@@ -1339,6 +1339,8 @@ void screenSaverTick(){
 	
 }
 
+
+char playerName[10] = "Player"; // Global variable to store the player's name
 
 void setup() {
 	Serial.begin(115200);
