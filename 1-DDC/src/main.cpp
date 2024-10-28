@@ -66,6 +66,10 @@ int levelNumber = 0;
 
 #define TIMEOUT              20000  // time until screen saver in milliseconds
 
+// Difficulty settings
+int enemySpeedMultiplier = 1;
+int lavaSpeedMultiplier = 1;
+
 int joystickTilt = 0;              // Stores the angle of the joystick
 int joystickWobble = 0;            // Stores the max amount of acceleration (wobble)
 
@@ -446,7 +450,7 @@ void spawnEnemy(int pos, int dir, int speed, int wobble){
 void spawnLava(int left, int right, int ontime, int offtime, int offset, int state, float grow, float flow){
     for(int i = 0; i<LAVA_COUNT; i++){
         if(!lavaPool[i].Alive()){
-            lavaPool[i].Spawn(left, right, ontime, offtime, offset, state, grow, flow);
+            lavaPool[i].Spawn(left, right, ontime / lavaSpeedMultiplier, offtime / lavaSpeedMultiplier, offset, state, grow, flow);
             return;
         }
     }
@@ -498,7 +502,22 @@ void die(){
 
 
 void loadLevel(){    	
-	// leave these alone
+	// Set difficulty multipliers
+	switch (user_settings.difficulty) {
+		case 1: // Easy
+			enemySpeedMultiplier = 1;
+			lavaSpeedMultiplier = 1;
+			break;
+		case 2: // Medium
+			enemySpeedMultiplier = 2;
+			lavaSpeedMultiplier = 2;
+			break;
+		case 3: // Hard
+			enemySpeedMultiplier = 3;
+			lavaSpeedMultiplier = 3;
+			break;
+	}
+	
 	FastLED.setBrightness(user_settings.led_brightness);
 	updateLives();
 	cleanupLevel();    

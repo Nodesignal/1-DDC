@@ -44,6 +44,11 @@ const uint8_t LIVES_PER_LEVEL = 3;      // default lives per level
 #define MIN_VOLUME							0
 #define MAX_VOLUME							255
 
+// DIFFICULTY
+#define DEFAULT_DIFFICULTY 1 // 1 = Easy, 2 = Medium, 3 = Hard
+#define MIN_DIFFICULTY 1
+#define MAX_DIFFICULTY 3
+
 #define DAC_AUDIO_PIN 		25     // should be 25 or 26 only
 
 enum ErrorNums{
@@ -84,6 +89,8 @@ typedef struct {
 	uint8_t audio_volume;
 	
 	uint8_t lives_per_level;	
+	
+	uint8_t difficulty; // Game difficulty level
 	
 	// saved statistics
 	uint16_t games_played;
@@ -247,7 +254,10 @@ void change_setting(char paramCode, uint16_t newValue)
 			settings_eeprom_write();
 		break;	
 		
-		default:
+		case 'G': // game difficulty
+			user_settings.difficulty = constrain(newValue, MIN_DIFFICULTY, MAX_DIFFICULTY);
+			settings_eeprom_write();
+		break;
 			Serial.print("Command Error: ");
 			Serial.println(readBuffer[0]);
 			return;
@@ -274,7 +284,7 @@ void reset_settings() {
 	
 	user_settings.lives_per_level = LIVES_PER_LEVEL;
 	
-	user_settings.games_played = 0;
+	user_settings.difficulty = DEFAULT_DIFFICULTY;
 	user_settings.total_points = 0;
 	user_settings.high_score = 0;	
 	user_settings.boss_kills = 0;
@@ -316,7 +326,11 @@ void show_settings_menu() {
 	
 	Serial.print("L=");
 	Serial.print(user_settings.lives_per_level);
-	Serial.println(" (Lives per Level (3-9))");		
+	Serial.println(" (Lives per Level (3-9))");
+	
+	Serial.print("G=");
+	Serial.print(user_settings.difficulty);
+	Serial.println(" (Game Difficulty 1=Easy, 2=Medium, 3=Hard)");
 	
 	Serial.println("\r\n(Send...)");
 	Serial.println("  ? to show current settings");

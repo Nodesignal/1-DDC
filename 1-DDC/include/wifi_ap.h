@@ -90,6 +90,7 @@ String generateStatsPage() {
 	page += "<tr><td>Joystick Deadzone (3-12)</td><td><form><input type='number' name='D' value='" + String(user_settings.joystick_deadzone) + "' min='3' max='12'><input type='submit'></form></td></tr>";
 	page += "<tr><td>Attack Sensitivity (20000-35000)</td><td><form><input type='number' name='A' value='" + String(user_settings.attack_threshold) + "' min='2000' max='35000'><input type='submit'></form></td></tr>";
 	page += "<tr><td>Lives Per Game</td><td>" + String(lives) + "</td></tr>";
+	page += "<tr><td>Game Difficulty (1=Easy, 2=Medium, 3=Hard)</td><td><form><input type='number' name='G' value='" + String(user_settings.difficulty) + "' min='1' max='3'><input type='submit'></form></td></tr>";
 	page += "</table>";
 #ifdef ENABLE_PROMETHEUS_METRICS_ENDPOINT
 	page += "<ul><li><a href=\"/metrics\">Metrics</a></li></ul>";
