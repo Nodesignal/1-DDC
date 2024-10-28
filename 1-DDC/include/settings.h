@@ -12,7 +12,7 @@
 #define EEPROM_SIZE				   256
 
 // LEDS
-#define NUM_LEDS        432
+#define NUM_LEDS        20
 #define MIN_LEDS				60
 
 

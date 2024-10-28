@@ -811,7 +811,7 @@ void tickEnemies(){
             }
             // Draw (if still alive)
             if(enemyPool[i].Alive()) {
-                leds[getLED(enemyPool[i]._pos)] = CRGB(255, 0, 0);
+                leds[getLED(enemyPool[i]._pos)] = CRGB(255, 25, 0);
             }
             // Hit player?
             if(

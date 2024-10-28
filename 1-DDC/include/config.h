@@ -35,7 +35,7 @@
 #define VIRTUAL_LED_COUNT 1000  
 
 #define LED_TYPE        			WS2812B
-#define LED_COLOR_ORDER      	GBR // typically this will be the order, but switch it if not
+#define LED_COLOR_ORDER      	GRB // typically this will be the order, but switch it if not
 #define CONVEYOR_BRIGHTNESS 	8
 #define LAVA_OFF_BRIGHTNESS 	4
 #define MAX_LEDS   						432// these LEDS can handle the max
