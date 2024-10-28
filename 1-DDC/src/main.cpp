@@ -379,7 +379,7 @@ void save_game_stats(bool bossKill)
 	if (score > user_settings.high_score) {
 		user_settings.high_score = score;
 	}
-	// Update leaderboard
+	char playerName[10] = "Player"; // Default player name, can be set dynamically
 	for (int i = 0; i < 5; i++) {
 		if (score > user_settings.leaderboard[i].score) {
 			for (int j = 4; j > i; j--) {

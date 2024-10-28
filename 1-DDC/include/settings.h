@@ -293,7 +293,8 @@ void reset_settings() {
 	user_settings.high_score = 0;
 	user_settings.boss_kills = 0;
 	for (int i = 0; i < 5; i++) {
-		user_settings.leaderboard[i] = 0;
+		user_settings.leaderboard[i].score = 0;
+		strncpy(user_settings.leaderboard[i].name, "", sizeof(user_settings.leaderboard[i].name));
 	}
 	
 	Serial.println("Settings reset...");
