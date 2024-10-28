@@ -56,7 +56,7 @@
 
 
 
-#define DIRECTION            1
+#define DIRECTION            0
 #define USE_GRAVITY          0     // 0/1 use gravity (LED strip going up wall)
 #define BEND_POINT           550   // 0/1000 point at which the LED strip goes up the wall
 
