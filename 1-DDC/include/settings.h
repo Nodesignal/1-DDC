@@ -95,9 +95,9 @@ typedef struct {
 	// saved statistics
 	uint16_t games_played;
 	uint32_t total_points;
-	uint16_t high_score;
-	uint16_t boss_kills;
-	uint16_t leaderboard[5]; // Top 5 high scores
+	uint16_t high_score = 0;
+	uint16_t boss_kills = 0;
+	uint16_t leaderboard[5] = {0}; // Top 5 high scores
 	
 }settings_t;
 
@@ -109,7 +109,7 @@ char readBuffer[READ_BUFFER_LEN];
 uint8_t readIndex = 0;
 
 void settings_init() {	
-	
+	reset_settings(); // Ensure settings are initialized to default values
 	settings_eeprom_read();
 	show_settings_menu();	
 	show_game_stats();
