@@ -1219,7 +1219,7 @@ void Fire2012()
 {
 // Array of temperature readings at each simulation cell
   static byte heat[VIRTUAL_LED_COUNT]; // the most possible
-  bool gReverseDirection = false;
+  bool gReverseDirection = true;
 
   // Step 1.  Cool down every cell a little
     for( int i = 0; i < user_settings.led_count; i++) {
