@@ -287,8 +287,11 @@ void reset_settings() {
 	
 	user_settings.difficulty = DEFAULT_DIFFICULTY;
 	user_settings.total_points = 0;
-	user_settings.high_score = 0;	
+	user_settings.high_score = 0;
 	user_settings.boss_kills = 0;
+	for (int i = 0; i < 5; i++) {
+		user_settings.leaderboard[i] = 0;
+	}
 	
 	Serial.println("Settings reset...");
 	
