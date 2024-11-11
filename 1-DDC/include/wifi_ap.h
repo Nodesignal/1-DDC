@@ -2,6 +2,7 @@
 #include "settings.h"
 
 extern int score;
+extern char currentPlayerName[11]; // Declare the external player name variable
 
 
 extern int lives;
@@ -212,9 +213,8 @@ void ap_client_check() {
 										decodedName += val[i];
 									}
 								}
-								strncpy(user_settings.leaderboard[0].name, decodedName.c_str(), sizeof(user_settings.leaderboard[0].name) - 1);
-								user_settings.leaderboard[0].name[sizeof(user_settings.leaderboard[0].name) - 1] = '\0';
-								score = 0; // Reset score after submitting the name
+								strncpy(currentPlayerName, decodedName.c_str(), sizeof(currentPlayerName) - 1);
+								currentPlayerName[sizeof(currentPlayerName) - 1] = '\0';
 							} else {
 								change_setting(paramCode, val.toInt());
 							}

@@ -160,6 +160,7 @@ int lives = LIVES_PER_GAME;
 bool lastLevel = false;
 
 int score = 0;
+char currentPlayerName[11] = ""; // Buffer for player name, max 10 chars + null terminator
 
 #define FASTLED_SHOW_CORE 0  // -- The core to run FastLED.show()
 
