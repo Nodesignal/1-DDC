@@ -1,11 +1,13 @@
 #include <WiFi.h>
 #include "settings.h"
 
+extern int score;
+
 
 extern int lives;
 
-const char* ssid     = "TWANG_AP";
-const char* passphrase = "12345678";
+const char* ssid     = "TWANG-AP"; // Ersetzen Sie dies durch Ihre SSID
+const char* passphrase = "12345678"; // Ersetzen Sie dies durch Ihr Passwort
 
 WiFiServer server(80);
 
@@ -19,12 +21,10 @@ enum PAGE_TO_SEND
 };
 
 void ap_setup() {
-
+	
     bool ret;
     
-    
-
-  /*
+	/*
    * Set up an access point
    * @param ssid          Pointer to the SSID (max 63 char).
    * @param passphrase    (for WPA2 min 8 char, for open use NULL)
@@ -41,6 +41,7 @@ void ap_setup() {
 	Serial.println("Web Server Address: http://192.168.4.1");
 	
 	}
+
 
 void sendHTTPHeader(WiFiClient client, const char* contentType) {
 	client.println("HTTP/1.1 200 OK");
@@ -66,10 +67,17 @@ void sendHTMLPage(WiFiClient client, const String& content) {
 	client.println("</style>");
 	client.println("<script>");
 	client.println("function refreshPage() { location.reload(); }");
+	client.println("function fetchMetrics() {");
+	client.println("  fetch('/metrics').then(response => response.text()).then(data => {");
+	client.println("    document.getElementById('metrics').innerText = data;");
+	client.println("  });");
+	client.println("}");
+	client.println("window.onload = fetchMetrics;");
 	client.println("</script>");
 	client.println("</head>");
 	client.println("<body>");
 	client.print(content);
+	client.println("<h2>Metrics</h2><pre id='metrics'>Loading...</pre>");
 	client.println("</body>");
 	client.println("</html>");
 }
@@ -99,6 +107,7 @@ String generateStatsPage() {
 	page += "<tr><td>Lives Per Game</td><td>" + String(lives) + "</td></tr>";
 	page += "<tr><td>Game Difficulty (1=Easy, 2=Medium, 3=Hard)</td><td><form><input type='number' name='G' value='" + String(user_settings.difficulty) + "' min='1' max='3'><input type='submit'></form></td></tr>";
 	page += "</table>";
+#define ENABLE_PROMETHEUS_METRICS_ENDPOINT
 #ifdef ENABLE_PROMETHEUS_METRICS_ENDPOINT
 	page += "<ul><li><a href=\"/metrics\">Metrics</a></li></ul>";
 #endif
@@ -130,10 +139,43 @@ static void sendMetricsPage(WiFiClient client)
 	__prom_metric("twang_total_points", "Total points", user_settings.total_points);
 	__prom_metric("twang_high_score", "High score", user_settings.high_score);
 	__prom_metric("twang_boss_kills", "Boss kills", user_settings.boss_kills);
+	// Add leaderboard metrics
+	for (int i = 0; i < 5; i++) {
+		client.print("twang_leaderboard_score{rank=\"");
+		client.print(i + 1);
+		client.print("\",name=\"");
+		client.print(user_settings.leaderboard[i].name);
+		client.print("\"} ");
+		client.print(user_settings.leaderboard[i].score);
+		client.print("\n");
+	}
 }
 
 #undef __prom_metric
 #endif // ENABLE_PROMETHEUS_METRICS_ENDPOINT
+
+void sendMetricsToInfluxDB() {
+    WiFiClient client;
+    const char* influxdb_server = "192.168.4.2"; // Replace with your InfluxDB server IP
+    const int influxdb_port = 8086; // Default InfluxDB port
+    const char* influxdb_database = "twang_metrics"; // Replace with your database name
+
+    if (client.connect(influxdb_server, influxdb_port)) {
+        String postData = "twang_metrics,games_played=" + String(user_settings.games_played) +
+                          ",total_points=" + String(user_settings.total_points) +
+                          ",high_score=" + String(user_settings.high_score) +
+                          ",boss_kills=" + String(user_settings.boss_kills);
+
+        client.println("POST /write?db=" + String(influxdb_database) + " HTTP/1.1");
+        client.println("Host: " + String(influxdb_server));
+        client.println("Connection: close");
+        client.println("Content-Type: text/plain");
+        client.println("Content-Length: " + String(postData.length()));
+        client.println();
+        client.println(postData);
+        client.stop();
+    }
+}
 
 void ap_client_check() {
 	WiFiClient client = server.available();   // listen for incoming clients

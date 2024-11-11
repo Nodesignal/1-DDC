@@ -1,0 +1,46 @@
+#############################################################################
+######################## Metrics-Data #######################################
+#############################################################################
+# HELP twang_games_played Number of games played                    #########
+# TYPE twang_games_played gauge                                     #########
+twang_games_played 0                                                #########
+# HELP twang_total_points Total points                              #########
+# TYPE twang_total_points gauge                                     #########
+twang_total_points 0                                                #########
+# HELP twang_high_score High score                                  #########
+# TYPE twang_high_score gauge                                       #########
+twang_high_score 0                                                  #########
+# HELP twang_boss_kills Boss kills                                  #########
+# TYPE twang_boss_kills gauge                                       #########
+twang_boss_kills 0                                                  #########
+twang_leaderboard_score{rank="1",name=""} 0                         #########
+twang_leaderboard_score{rank="2",name=""} 0                         #########
+twang_leaderboard_score{rank="3",name=""} 0                         #########
+twang_leaderboard_score{rank="4",name=""} 0                         #########
+twang_leaderboard_score{rank="5",name=""} 0                         #########
+
+
+
+
+# HELP twang_games_played Number of games played       
+# TYPE twang_games_played gauge                                      
+twang_games_played 10                                                
+
+# HELP twang_total_points Total points                               
+# TYPE twang_total_points gauge                                      
+twang_total_points 1500                                               
+
+# HELP twang_high_score High score                                  
+# TYPE twang_high_score gauge                                       
+twang_high_score 500                                                 
+
+# HELP twang_boss_kills Boss kills                                  
+# TYPE twang_boss_kills gauge                                       
+twang_boss_kills 5                                                  
+
+# Leaderboard - Die besten 5 Spieler mit Rank und Punktzahl
+twang_leaderboard_score{rank="1",name="Alice"} 500                         
+twang_leaderboard_score{rank="2",name="Bob"} 450                         
+twang_leaderboard_score{rank="3",name="Charlie"} 400                         
+twang_leaderboard_score{rank="4",name="David"} 300                          
+twang_leaderboard_score{rank="5",name="Eve"} 250  

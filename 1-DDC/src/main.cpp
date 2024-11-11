@@ -56,7 +56,7 @@
 
 
 
-#define DIRECTION            0
+#define DIRECTION            1
 #define USE_GRAVITY          0     // 0/1 use gravity (LED strip going up wall)
 #define BEND_POINT           550   // 0/1000 point at which the LED strip goes up the wall
 
@@ -512,7 +512,11 @@ void die(){
 }
 
 
-void loadLevel(){    	
+void loadLevel(){
+    // Reset the current score at the start of a new game
+    if (levelNumber == 0) {
+        score = 0;
+    }
 	// Set difficulty multipliers
 	switch (user_settings.difficulty) {
 		case 1: // Easy
@@ -747,6 +751,11 @@ void gameOver(){
 
     levelNumber = 0;
     loadLevel();
+
+    // Reset leaderboard scores to 0
+    for (int i = 0; i < 5; i++) {
+        user_settings.leaderboard[i].score = 0;
+    }
 }
 
 
@@ -1487,6 +1496,7 @@ void loop() {
 						{
 						FastLED.clear(); 
 						save_game_stats(false);		// boss not killed
+						sendMetricsToInfluxDB();    // send metrics to InfluxDB
 						
 						// restart from the beginning
 						stage = STARTUP;
