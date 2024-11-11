@@ -96,6 +96,8 @@ String generateStatsPage() {
 	page += "<h2>Leaderboard</h2><ul>";
 	for (int i = 0; i < 5; i++) {
 		page += "<li>Rank " + String(i + 1) + ": " + String(user_settings.leaderboard[i].name) + " - " + String(user_settings.leaderboard[i].score) + " points</li>";
+		Serial.print("Leaderboard Display Name: ");
+		Serial.println(user_settings.leaderboard[i].name);
 	}
 	page += "</ul>";
 	page += "<h2>Enter Player Name</h2><form><input type='text' name='N' maxlength='10' value='" + String(user_settings.leaderboard[0].name) + "'><input type='submit'></form>";
@@ -215,6 +217,8 @@ void ap_client_check() {
 								}
 								strncpy(currentPlayerName, decodedName.c_str(), sizeof(currentPlayerName) - 1);
 								currentPlayerName[sizeof(currentPlayerName) - 1] = '\0';
+								Serial.print("Player Name Set To: ");
+								Serial.println(currentPlayerName);
 							} else {
 								change_setting(paramCode, val.toInt());
 							}

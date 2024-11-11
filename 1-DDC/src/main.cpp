@@ -387,8 +387,10 @@ void save_game_stats(bool bossKill)
 			}
 			user_settings.leaderboard[i].score = score;
 			// Hier den aktuellen Spielernamen speichern
-            strncpy(user_settings.leaderboard[i].name, currentPlayerName, sizeof(user_settings.leaderboard[i].name) - 1);
-            user_settings.leaderboard[i].name[sizeof(user_settings.leaderboard[i].name) - 1] = '\0';
+			strncpy(user_settings.leaderboard[i].name, currentPlayerName, sizeof(user_settings.leaderboard[i].name) - 1);
+			user_settings.leaderboard[i].name[sizeof(user_settings.leaderboard[i].name) - 1] = '\0';
+			Serial.print("Leaderboard Name Set To: ");
+			Serial.println(user_settings.leaderboard[i].name);
 			break;
 		}
 	}
