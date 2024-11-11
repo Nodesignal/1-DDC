@@ -357,56 +357,47 @@ void show_game_stats()
 	Serial.print("Boss kills: ");Serial.println(user_settings.boss_kills);	
 }
 
-void settings_eeprom_read()	{
+void settings_eeprom_read() {
+    EEPROM.begin(EEPROM_SIZE);
 
-	EEPROM.begin(EEPROM_SIZE);
-	
-	uint8_t ver = EEPROM.read(0);
-	uint8_t temp[sizeof(user_settings)];
+    uint8_t ver = EEPROM.read(0);
+    if (ver != SETTINGS_VERSION) {
+        Serial.print("Error: EEPROM settings read failed: "); Serial.println(ver);
+        Serial.println("Loading defaults...");
+        EEPROM.end();
+        reset_settings();
+        return;
+    } else {
+        Serial.print("Settings version: "); Serial.println(ver);
+    }
 
-	if (ver != SETTINGS_VERSION) {
-		Serial.print("Error: EEPROM settings read failed:"); Serial.println(ver);
-		Serial.println("Loading defaults...");
-		EEPROM.end();
-		reset_settings();		
-		return;
-	}		
-	else {		
-		Serial.print("Settings version: "); Serial.println(ver);		
-	}	
-	
-	for (int i=0; i<sizeof(user_settings); i++)
-	{
-		temp[i] = EEPROM.read(i);
-	}
-	
-	EEPROM.end();
-	
-	memcpy((char*)&user_settings, temp, sizeof(user_settings));	
-	
-	
-	
+    uint8_t temp[sizeof(user_settings)];
+    for (int i = 0; i < sizeof(user_settings); i++) {
+        temp[i] = EEPROM.read(i + 1); // Start reading from address 1
+    }
+
+    EEPROM.end();
+    memcpy((char*)&user_settings, temp, sizeof(user_settings));
 }
 
-void settings_eeprom_write() {		
+void settings_eeprom_write() {
+    sound_pause(); // prevent interrupt from causing crash
 
-	sound_pause(); // prevent interrupt from causing crash	
+    EEPROM.begin(EEPROM_SIZE);
 
-	EEPROM.begin(EEPROM_SIZE);
-	
-	uint8_t temp[sizeof(user_settings)];	
-	memcpy(temp, (uint8_t*)&user_settings, sizeof(user_settings));  	
-	
-	for (int i=0; i<sizeof(user_settings); i++)
-	{
-		EEPROM.write(i, temp[i]);
-	}			
-	
-	EEPROM.commit();	
-	EEPROM.end();
-	
-	sound_resume(); // restore sound interrupt
-	
+    EEPROM.write(0, SETTINGS_VERSION); // Write version at address 0
+
+    uint8_t temp[sizeof(user_settings)];
+    memcpy(temp, (uint8_t*)&user_settings, sizeof(user_settings));
+
+    for (int i = 0; i < sizeof(user_settings); i++) {
+        EEPROM.write(i + 1, temp[i]); // Start writing from address 1
+    }
+
+    EEPROM.commit();
+    EEPROM.end();
+
+    sound_resume(); // restore sound interrupt
 }
 
 void printError(int reason) {
