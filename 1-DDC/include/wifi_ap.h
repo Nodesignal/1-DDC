@@ -7,7 +7,7 @@ extern int score;
 extern int lives;
 
 const char* ssid     = "TWANG-AP"; // Ersetzen Sie dies durch Ihre SSID
-const char* passphrase = "12345678"; // Ersetzen Sie dies durch Ihr Passwort
+const char* passphrase = "123456789"; // Ersetzen Sie dies durch Ihr Passwort
 
 WiFiServer server(80);
 
