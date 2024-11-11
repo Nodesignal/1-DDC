@@ -1496,7 +1496,6 @@ void loop() {
 						{
 						FastLED.clear(); 
 						save_game_stats(false);		// boss not killed
-						sendMetricsToInfluxDB();    // send metrics to InfluxDB
 						
 						// restart from the beginning
 						stage = STARTUP;

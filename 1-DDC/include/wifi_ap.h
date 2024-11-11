@@ -154,28 +154,6 @@ static void sendMetricsPage(WiFiClient client)
 #undef __prom_metric
 #endif // ENABLE_PROMETHEUS_METRICS_ENDPOINT
 
-void sendMetricsToInfluxDB() {
-    WiFiClient client;
-    const char* influxdb_server = "192.168.4.2"; // Replace with your InfluxDB server IP
-    const int influxdb_port = 8086; // Default InfluxDB port
-    const char* influxdb_database = "twang_metrics"; // Replace with your database name
-
-    if (client.connect(influxdb_server, influxdb_port)) {
-        String postData = "twang_metrics,games_played=" + String(user_settings.games_played) +
-                          ",total_points=" + String(user_settings.total_points) +
-                          ",high_score=" + String(user_settings.high_score) +
-                          ",boss_kills=" + String(user_settings.boss_kills);
-
-        client.println("POST /write?db=" + String(influxdb_database) + " HTTP/1.1");
-        client.println("Host: " + String(influxdb_server));
-        client.println("Connection: close");
-        client.println("Content-Type: text/plain");
-        client.println("Content-Length: " + String(postData.length()));
-        client.println();
-        client.println(postData);
-        client.stop();
-    }
-}
 
 void ap_client_check() {
 	WiFiClient client = server.available();   // listen for incoming clients
