@@ -1,0 +1,3 @@
+Ist es möglich die aktuellen Daten des `leaderboard` nach jedem Spiel in eine separate Datenbank zu schreiben? 
+
+Der eeprom und somit auch die aktuellen `leaderboard` Werte werden nach dem Neustart des Gerätes gelöscht. Was für Optionen habe ich um dieses Problem zu beheben?
