@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include "hello.h"
 #include "settings.h"
 
 extern int score;
@@ -21,6 +22,7 @@ enum PAGE_TO_SEND
   Metrics
 };
 
+void hello();
 void ap_setup() {
 	
     bool ret;
