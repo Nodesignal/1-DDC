@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include "hello.h"
 #include "settings.h"
 
 extern int score;
