@@ -4,3 +4,7 @@
 void hello();
 
 #endif // HELLO_H
+void hello() {
+    // Implement the hello function
+    Serial.println("Hello, World!");
+}
