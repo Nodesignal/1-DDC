@@ -22,7 +22,6 @@ enum PAGE_TO_SEND
   Metrics
 };
 
-void hello();
 void ap_setup() {
 	
     bool ret;
