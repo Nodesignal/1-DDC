@@ -5,7 +5,6 @@ void setupPWM() {
     // Konfiguriere den PWM-Timer und -Kanal
     ledcSetup(PWM_CHANNEL, PWM_FREQUENCY, PWM_RESOLUTION);
     ledcAttachPin(PWM_PIN, PWM_CHANNEL);
-}
 
 void sound_pause() {
     // Implementiere die Logik, um den Sound zu pausieren
