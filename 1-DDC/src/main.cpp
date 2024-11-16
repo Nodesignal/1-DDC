@@ -48,10 +48,6 @@
 #include "iSin.h"
 #include "sound.h"
 
-// Ensure that the sound functions are called correctly
-setupPWM();
-playSound(1000, 128);
-stopSound();
 #include "settings.h"
 #include "wifi_ap.h"
 #include <esp_system.h> // For ESP.getFreeHeap()
@@ -299,7 +295,7 @@ void SFXFreqSweepWarble(int duration, int elapsedTime, int freqStart, int freqEn
 	if (warble)
 			warble = map(sin(millis()/20.0)*1000.0, -1000, 1000, 0, warble);
 		
-	sound(freq + warble, user_settings.audio_volume);
+	playSound(freq + warble, user_settings.audio_volume);
 }
 
 /*
@@ -328,7 +324,7 @@ void SFXFreqSweepNoise(int duration, int elapsedTime, int freqStart, int freqEnd
 	if (noiseFactor)
 			noiseFactor = noiseFactor - random8(noiseFactor / 2);
 		
-	sound(freq + noiseFactor, user_settings.audio_volume);
+	playSound(freq + noiseFactor, user_settings.audio_volume);
 }
 
 
@@ -342,14 +338,14 @@ void SFXtilt(int amount){
     if(playerPositionModifier < 0) f -= 500;
     if(playerPositionModifier > 0) f += 200;		
 		int vol = map(abs(amount), 0, 90, user_settings.audio_volume / 2, user_settings.audio_volume * 3/4);
-    sound(f,vol);
+    playSound(f,vol);
 }
 void SFXattacking(){
     int freq = map(sin(millis()/2.0)*1000.0, -1000, 1000, 500, 600);
     if(random8(5)== 0){
       freq *= 3;
     }
-    sound(freq, user_settings.audio_volume);
+    playSound(freq, user_settings.audio_volume);
 }
 void SFXdead(){	
 	SFXFreqSweepNoise(1000, millis()-killTime, 1000, 10, 200);
@@ -360,7 +356,7 @@ void SFXgameover(){
 }
 
 void SFXkill(){
-    sound(2000, user_settings.audio_volume);
+    playSound(2000, user_settings.audio_volume);
 }
 void SFXwin(){
 	SFXFreqSweepWarble(WIN_OFF_DURATION, millis()-stageStartTime, 40, 400, 20);

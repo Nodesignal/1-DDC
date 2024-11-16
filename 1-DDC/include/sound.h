@@ -22,6 +22,10 @@
 void setupPWM();
 void playSound(uint16_t freq, uint8_t volume);
 void stopSound();
+void sound_pause();
+void sound_resume();
+void soundOff();
+void sound_init(int pin);
 
 
 
