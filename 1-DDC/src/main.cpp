@@ -1412,23 +1412,25 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Entering loop...");
-  checkWiFiConnection();
-  long mm = millis();
-  int brightness = 0;  
-    
-  ap_client_check(); // check for web client
-  static long lastPrintTime = 0;
-  if (millis() - lastPrintTime > 5000) { // alle 5 Sekunden
-      Serial.print("Free heap in loop: ");
-      Serial.println(ESP.getFreeHeap());
-      lastPrintTime = millis();
-  }
-  checkSerialInput();
-  Serial.println("Checked serial input.");
+    static long lastDebugTime = 0; // Fügen Sie diese Zeile hinzu, um die Zeit der letzten Debug-Ausgabe zu verfolgen
 
-  Serial.print("Current stage: ");
-  Serial.println(stage);
+    checkWiFiConnection();
+    long mm = millis();
+    int brightness = 0;  
+    
+    ap_client_check(); // check for web client
+
+    // Reduzieren Sie die Häufigkeit der Debug-Ausgaben
+    if (mm - lastDebugTime > 5000) { // alle 5 Sekunden
+        Serial.println("Entering loop...");
+        Serial.print("Current stage: ");
+        Serial.println(stage);
+        lastDebugTime = mm;
+    }
+
+    checkSerialInput();
+    // Entfernen oder kommentieren Sie diese Debug-Ausgabe, wenn sie nicht benötigt wird
+    // Serial.println("Checked serial input.");
   if(stage == PLAY){
       if(attacking){
           SFXattacking();
