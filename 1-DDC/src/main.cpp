@@ -358,6 +358,7 @@ void SFXgameover(){
 void SFXkill(){
     playSound(2000, user_settings.audio_volume);
 }
+
 void SFXwin(){
 	SFXFreqSweepWarble(WIN_OFF_DURATION, millis()-stageStartTime, 40, 400, 20);
 }
