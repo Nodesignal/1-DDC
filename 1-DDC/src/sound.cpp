@@ -24,13 +24,21 @@ void sound_init(int pin) {
     setupPWM();
 }
 
+static uint16_t previousFreq = 0;
+
 void playSound(uint16_t freq, uint8_t volume) {
     // Überprüfe, ob die Frequenz innerhalb der zulässigen Grenzen liegt
     if (freq < MIN_FREQ || freq > MAX_FREQ) {
         Serial.println("Frequenz außerhalb der zulässigen Grenzen");
         return;
     }
-    // Konfiguriere den PWM-Kanal mit der Frequenz und Lautstärke
+    // Glätte die Frequenzänderung
+    if (abs(freq - previousFreq) > 100) { // Begrenze die Änderung auf 100 Hz pro Aufruf
+        freq = previousFreq + (freq > previousFreq ? 100 : -100);
+    }
+    previousFreq = freq;
+
+    // Konfiguriere den PWM-Kanal mit der Frequenz und reduzierter Lautstärke
     ledcWriteTone(PWM_CHANNEL, freq);
-    ledcWrite(PWM_CHANNEL, volume);
+    ledcWrite(PWM_CHANNEL, volume / 2); // Reduziere die Lautstärke um die Hälfte
 }

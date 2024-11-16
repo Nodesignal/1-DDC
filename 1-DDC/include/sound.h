@@ -13,7 +13,7 @@
 #include "driver/ledc.h"
 
 #define PWM_CHANNEL 0
-#define PWM_FREQUENCY 1000 // Startfrequenz
+#define PWM_FREQUENCY 500 // Reduziere die Startfrequenz
 #define PWM_RESOLUTION LEDC_TIMER_8_BIT
 #define PWM_PIN 25 // GPIO-Pin für den Lautsprecher
 #define MIN_FREQ 20
