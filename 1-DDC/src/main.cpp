@@ -1437,13 +1437,13 @@ void loop() {
   if(stage == PLAY){
       if(attacking){
           SFXattacking();
-      }else{
+      }else if(joystickTilt != 0){
           SFXtilt(joystickTilt);
-					
-					
+      }else{
+          soundOff(); // Stoppe den Ton, wenn der Spieler nichts macht
       }
-  }else if(stage == DEAD){
-      SFXdead();
+  }else{
+      soundOff(); // Stoppe den Ton in anderen Spielphasen
   }
 
   if (mm - previousMillis >= MIN_REDRAW_INTERVAL) {

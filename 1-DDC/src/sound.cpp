@@ -16,7 +16,8 @@ void sound_resume() {
 }
 
 void soundOff() {
-    // Implementiere die Logik, um den Sound auszuschalten
+    ledcWrite(PWM_CHANNEL, 0); // Setze die Lautstärke auf 0, um den Ton zu stoppen
+}
 }
 
 void sound_init(int pin) {
