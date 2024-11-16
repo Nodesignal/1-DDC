@@ -528,6 +528,9 @@ void die(){
     if(levelNumber > 0) 
 		lives --; 
 	
+    // Füge diesen Aufruf hinzu, um den Sound abzuspielen, unabhängig von der Anzahl der verbleibenden Leben
+    SFXdead();
+
     if(lives == 0){
        stage = GAMEOVER;
        stageStartTime = millis();
@@ -541,9 +544,6 @@ void die(){
       stage = DEAD;
     }
     killTime = millis();
-
-    // Füge diesen Aufruf hinzu, um den Sound abzuspielen
-    SFXdead();
 }
 
 
