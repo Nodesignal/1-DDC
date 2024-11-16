@@ -541,6 +541,9 @@ void die(){
       stage = DEAD;
     }
     killTime = millis();
+
+    // Füge diesen Aufruf hinzu, um den Sound abzuspielen
+    SFXdead();
 }
 
 
