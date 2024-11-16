@@ -49,6 +49,7 @@
 #include "sound.h"
 
 #include "settings.h"
+#include "sound.h" // Stelle sicher, dass sound.h eingebunden ist
 #include "wifi_ap.h"
 #include <esp_system.h> // For ESP.getFreeHeap()
 

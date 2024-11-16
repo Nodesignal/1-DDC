@@ -18,8 +18,12 @@ void sound_init(int pin) {
 #include "sound.h"
 
 void playSound(uint16_t freq, uint8_t volume) {
-    // Implementiere die Logik, um einen Ton mit der angegebenen Frequenz und Lautstärke abzuspielen
-    // Beispiel: Konfiguriere den PWM-Kanal mit der Frequenz und Lautstärke
+    // Überprüfe, ob die Frequenz innerhalb der zulässigen Grenzen liegt
+    if (freq < MIN_FREQ || freq > MAX_FREQ) {
+        Serial.println("Frequenz außerhalb der zulässigen Grenzen");
+        return;
+    }
+    // Konfiguriere den PWM-Kanal mit der Frequenz und Lautstärke
     ledcWriteTone(PWM_CHANNEL, freq);
     ledcWrite(PWM_CHANNEL, volume);
 }

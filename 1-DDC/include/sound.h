@@ -20,7 +20,7 @@
 #define MAX_FREQ 16000
 
 void setupPWM();
-void playSound(uint16_t freq, uint8_t volume);
+void playSound(uint16_t freq, uint8_t volume); // Deklariere die Funktion playSound
 void stopSound();
 void sound_pause();
 void sound_resume();
