@@ -51,6 +51,29 @@
 #include "wifi_ap.h"
 #include <esp_system.h> // For ESP.getFreeHeap()
 
+void checkWiFiConnection() {
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("WiFi disconnected, attempting to reconnect...");
+        WiFi.disconnect();
+        WiFi.begin(ssid, passphrase);
+
+        int retryCount = 0;
+        while (WiFi.status() != WL_CONNECTED && retryCount < 10) {
+            delay(500);
+            Serial.print(".");
+            retryCount++;
+        }
+
+        if (WiFi.status() == WL_CONNECTED) {
+            Serial.println("\nReconnected to WiFi");
+            Serial.print("IP Address: ");
+            Serial.println(WiFi.localIP());
+        } else {
+            Serial.println("\nFailed to reconnect to WiFi");
+        }
+    }
+}
+
 #if defined(FASTLED_VERSION) && (FASTLED_VERSION < 3001000)
 	#error "Requires FastLED 3.1 or later; check github for latest code."
 #endif
@@ -1389,6 +1412,7 @@ void setup() {
 }
 
 void loop() {
+  checkWiFiConnection();
   long mm = millis();
   int brightness = 0;  
     
