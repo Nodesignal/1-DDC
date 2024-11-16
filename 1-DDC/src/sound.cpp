@@ -1,3 +1,4 @@
+#include <Arduino.h> // Füge dies hinzu, um Serial zu verwenden
 #include "sound.h"
 
 void sound_pause() {
