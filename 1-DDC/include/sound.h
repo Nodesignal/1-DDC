@@ -19,23 +19,9 @@
 #define MIN_FREQ 20
 #define MAX_FREQ 16000
 
-void setupPWM() {
-    ledcSetup(PWM_CHANNEL, PWM_FREQUENCY, PWM_RESOLUTION);
-    ledcAttachPin(PWM_PIN, PWM_CHANNEL);
-}
-
-void playSound(uint16_t freq, uint8_t volume) {
-    if (volume == 0) {
-        ledcWrite(PWM_CHANNEL, 0); // PWM ausschalten
-        return;
-    }
-    ledcWriteTone(PWM_CHANNEL, freq); // Frequenz einstellen
-    ledcWrite(PWM_CHANNEL, volume); // Lautstärke einstellen
-}
-
-void stopSound() {
-    ledcWrite(PWM_CHANNEL, 0); // PWM ausschalten
-}
+void setupPWM();
+void playSound(uint16_t freq, uint8_t volume);
+void stopSound();
 
 
 

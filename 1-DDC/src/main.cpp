@@ -47,6 +47,11 @@
 #include "conveyor.h"
 #include "iSin.h"
 #include "sound.h"
+
+// Ensure that the sound functions are called correctly
+setupPWM();
+playSound(1000, 128);
+stopSound();
 #include "settings.h"
 #include "wifi_ap.h"
 #include <esp_system.h> // For ESP.getFreeHeap()
