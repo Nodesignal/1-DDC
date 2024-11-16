@@ -7,8 +7,8 @@ extern char currentPlayerName[11]; // Declare the external player name variable
 
 extern int lives;
 
-const char* ssid     = "TWANG-AP"; // Ersetzen Sie dies durch Ihre SSID
-const char* passphrase = "123456789"; // Ersetzen Sie dies durch Ihr Passwort
+const char* ssid     = "Martin Router King"; // Ersetzen Sie dies durch Ihre SSID
+const char* passphrase = "25261100585769915716"; // Ersetzen Sie dies durch Ihr Passwort
 
 WiFiServer server(80);
 
