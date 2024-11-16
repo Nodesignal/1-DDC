@@ -1393,8 +1393,12 @@ void loop() {
   int brightness = 0;  
     
   ap_client_check(); // check for web client
-  Serial.print("Free heap in loop: ");
-  Serial.println(ESP.getFreeHeap());
+  static long lastPrintTime = 0;
+  if (millis() - lastPrintTime > 5000) { // alle 5 Sekunden
+      Serial.print("Free heap in loop: ");
+      Serial.println(ESP.getFreeHeap());
+      lastPrintTime = millis();
+  }
   checkSerialInput();
 
   if(stage == PLAY){
