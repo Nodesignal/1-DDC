@@ -49,6 +49,7 @@
 #include "sound.h"
 #include "settings.h"
 #include "wifi_ap.h"
+#include <esp_system.h> // For ESP.getFreeHeap()
 
 #if defined(FASTLED_VERSION) && (FASTLED_VERSION < 3001000)
 	#error "Requires FastLED 3.1 or later; check github for latest code."
@@ -1355,6 +1356,9 @@ void screenSaverTick(){
 
 void setup() {
 	Serial.begin(115200);
+	Serial.println("Starting TWANG32...");
+	Serial.print("Free heap at start: ");
+	Serial.println(ESP.getFreeHeap());
 	Serial.print("\r\nTWANG32 VERSION: "); Serial.println(VERSION);	
 	
 	settings_init();	// load the user settings from EEPROM
@@ -1389,6 +1393,8 @@ void loop() {
   int brightness = 0;  
     
   ap_client_check(); // check for web client
+  Serial.print("Free heap in loop: ");
+  Serial.println(ESP.getFreeHeap());
   checkSerialInput();
 
   if(stage == PLAY){
