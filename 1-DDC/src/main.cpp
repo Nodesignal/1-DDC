@@ -1397,7 +1397,7 @@ void setup() {
 	FastLED.setDither(1);
 	
 	// -- Create the ESP32 FastLED show task
-  xTaskCreatePinnedToCore(FastLEDshowTask, "FastLEDshowTask", 2048, NULL, 2, &FastLEDshowTaskHandle, FASTLED_SHOW_CORE); 
+  xTaskCreatePinnedToCore(FastLEDshowTask, "FastLEDshowTask", 4096, NULL, 2, &FastLEDshowTaskHandle, FASTLED_SHOW_CORE); 
 
 	sound_init(DAC_AUDIO_PIN);
 	
@@ -1412,6 +1412,7 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("Entering loop...");
   checkWiFiConnection();
   long mm = millis();
   int brightness = 0;  
@@ -1424,7 +1425,10 @@ void loop() {
       lastPrintTime = millis();
   }
   checkSerialInput();
+  Serial.println("Checked serial input.");
 
+  Serial.print("Current stage: ");
+  Serial.println(stage);
   if(stage == PLAY){
       if(attacking){
           SFXattacking();
