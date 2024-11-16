@@ -1,4 +1,4 @@
-#include <Arduino.h> // Füge dies hinzu, um Serial zu verwenden
+#include <Arduino.h>
 #include "sound.h"
 
 void setupPWM() {
@@ -16,14 +16,13 @@ void sound_resume() {
 }
 
 void soundOff() {
-    // Implementiere die Logik, um den Sound auszuschalten
+    ledcWrite(PWM_CHANNEL, 0); // Setze die Lautstärke auf 0, um den Ton zu stoppen
 }
 
 void sound_init(int pin) {
     // Initialisiere den PWM-Kanal
     setupPWM();
 }
-#include "sound.h"
 
 void playSound(uint16_t freq, uint8_t volume) {
     // Überprüfe, ob die Frequenz innerhalb der zulässigen Grenzen liegt
