@@ -1374,7 +1374,7 @@ void setup() {
 
 	sound_init(DAC_AUDIO_PIN);
 	
-	ap_setup();
+	wifi_client_setup();
 
 	stage = STARTUP;
 	stageStartTime = millis();

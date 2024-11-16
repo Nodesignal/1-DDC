@@ -21,27 +21,18 @@ enum PAGE_TO_SEND
   Metrics
 };
 
-void ap_setup() {
-	
-    bool ret;
-    
-	/*
-   * Set up an access point
-   * @param ssid          Pointer to the SSID (max 63 char).
-   * @param passphrase    (for WPA2 min 8 char, for open use NULL)
-   * @param channel       WiFi channel number, 1 - 13.
-   * @param ssid_hidden   Network cloaking (0 = broadcast SSID, 1 = hide SSID)
-   */
-    ret = WiFi.softAP(ssid, passphrase, 2, 0);
-    server.begin();
-	
-    Serial.print("\r\nWiFi SSID: ");
-	Serial.println(ssid);
-	Serial.print("WiFi Password: ");
-	Serial.println(passphrase);
-	Serial.println("Web Server Address: http://192.168.4.1");
-	
-	}
+void wifi_client_setup() {
+    WiFi.begin(ssid, passphrase);
+
+    Serial.print("Connecting to WiFi");
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+    Serial.println("\nConnected to WiFi");
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+}
 
 
 void sendHTTPHeader(WiFiClient client, const char* contentType) {
