@@ -1375,6 +1375,8 @@ void setup() {
 	sound_init(DAC_AUDIO_PIN);
 	
 	wifi_client_setup();
+	server.begin();
+	Serial.println("Server started");
 
 	stage = STARTUP;
 	stageStartTime = millis();
