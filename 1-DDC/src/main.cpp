@@ -27,7 +27,6 @@
 		- Use Serial port or Wifi to set your strip length.	
 */
 
-#include "hello.cpp"
 
 #define VERSION "2018-06-28"
 
