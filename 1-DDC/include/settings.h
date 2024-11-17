@@ -294,7 +294,8 @@ void reset_settings() {
 	user_settings.boss_kills = 0;
 	for (int i = 0; i < 5; i++) {
 		user_settings.leaderboard[i].score = 0;
-		strncpy(user_settings.leaderboard[i].name, "", sizeof(user_settings.leaderboard[i].name));
+		strncpy(user_settings.leaderboard[i].name, "", sizeof(user_settings.leaderboard[i].name) - 1);
+		user_settings.leaderboard[i].name[sizeof(user_settings.leaderboard[i].name) - 1] = '\0';
 	}
 	
 	Serial.println("Settings reset...");
@@ -371,6 +372,12 @@ void settings_eeprom_read() {
         Serial.print("Settings version: "); Serial.println(ver);
     }
 
+    if (sizeof(user_settings) + 1 > EEPROM_SIZE) {
+        Serial.println("Error: EEPROM size exceeded");
+        EEPROM.end();
+        reset_settings();
+        return;
+    }
     uint8_t temp[sizeof(user_settings)];
     for (int i = 0; i < sizeof(user_settings); i++) {
         temp[i] = EEPROM.read(i + 1); // Start reading from address 1
@@ -387,6 +394,11 @@ void settings_eeprom_write() {
 
     EEPROM.write(0, SETTINGS_VERSION); // Write version at address 0
 
+    if (sizeof(user_settings) + 1 > EEPROM_SIZE) {
+        Serial.println("Error: EEPROM size exceeded");
+        EEPROM.end();
+        return;
+    }
     uint8_t temp[sizeof(user_settings)];
     memcpy(temp, (uint8_t*)&user_settings, sizeof(user_settings));
 
