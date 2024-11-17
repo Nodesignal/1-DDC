@@ -35,8 +35,8 @@
 #include "Arduino.h"
 #include "RunningMedian.h"
 
-// twang files
 #include "config.h"
+#include "hello.h"
 #include "twang_mpu.h"
 #include "enemy.h"
 #include "particle.h"
@@ -1419,6 +1419,7 @@ void setup() {
 void loop() {
     static long lastDebugTime = 0; // Fügen Sie diese Zeile hinzu, um die Zeit der letzten Debug-Ausgabe zu verfolgen
 
+    hello();
     checkWiFiConnection();
     long mm = millis();
     int brightness = 0;  
